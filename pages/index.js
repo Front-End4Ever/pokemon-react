@@ -6,8 +6,23 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import React from "react";
 
+
 function getPokemon(URL) {
   return fetch(URL).then((r) => r.json());
+}
+function PokemonPopUp({ url, setOpen, open }) {
+  const { data } = useSWR(
+    url,
+    getPokemon
+  );
+  console.log(data);
+  if (!data) {
+    return "Loading...";
+  }
+  return <Dialog onClose={() => setOpen(false)} open={open}>
+    <DialogTitle>{data.name}</DialogTitle>
+    <img src={data.sprites.front_default} width='100px' height='100px'></img>
+  </Dialog>
 }
 // creating a component that will render our pokemon
 function Pokemon({ pokemon }) {
@@ -16,12 +31,9 @@ function Pokemon({ pokemon }) {
   const [open, setOpen] = React.useState(false)
   return (
     //whenever the card is clicked it will open 
-    <div onClick={() => setOpen(true)} className={styles.card}>
-      <h2>{pokemon.name}</h2>
-      <p>Find in-depth information about Next.js features and API.</p>
-      <Dialog onClose={() => setOpen(false)} open={open}>
-        <DialogTitle>Set backup account</DialogTitle>
-      </Dialog>
+    <div className={styles.card}>
+      <h2 onClick={() => setOpen(true)}>{pokemon.name}</h2>
+      <PokemonPopUp url={pokemon.url} setOpen={setOpen} open={open}></PokemonPopUp>
     </div>
   );
 }
