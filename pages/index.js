@@ -21,6 +21,7 @@ function PokemonPopUp({ url, setOpen, open }) {
   }
   return <Dialog onClose={() => setOpen(false)} open={open}>
     <DialogTitle>{data.name}</DialogTitle>
+    <h2>{data.types[0]["type"]["name"]}</h2>
     <img src={data.sprites.front_default} width='100px' height='100px'></img>
   </Dialog>
 }
@@ -33,6 +34,7 @@ function Pokemon({ pokemon }) {
     //whenever the card is clicked it will open 
     <div className={styles.card}>
       <h2 onClick={() => setOpen(true)}>{pokemon.name}</h2>
+      <h2 onClick={() => setOpen(true)}>{pokemon.types[0]["type"]["name"]}</h2>
       <PokemonPopUp url={pokemon.url} setOpen={setOpen} open={open}></PokemonPopUp>
     </div>
   );
