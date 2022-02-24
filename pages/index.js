@@ -10,56 +10,56 @@ import TextField from "@mui/material/TextField";
 function getPokemon(URL) {
   return fetch(URL).then((r) => r.json());
 }
-function PokemonPopUp({ url, setOpen, open }) {
-  const { data } = useSWR(url, getPokemon);
-  console.log(data);
-  if (!data) {
-    return "Loading...";
-  }
+
+function PokemonPopUp({ data, setOpen, open }) {
   return (
-    <div>
-      <img src={data.sprites.front_default} width="100px" height="100px"></img>
-    <Dialog onClose={() => setOpen(false)} open={open}>
-      <DialogTitle>{data.name}</DialogTitle>
-      <img src={data.sprites.front_default} width="100px" height="100px"></img>
+      <Dialog onClose={() => setOpen(false)} open={open}>
+        <DialogTitle>{data.name}</DialogTitle>
+        <img
+          src={data.sprites.front_default}
+          width="100px"
+          height="100px"
+        ></img>
 
-      {/* loops through type array and renders all types... map goes through the current array and turns it into a new array*/}
-      <div className={styles.type}>
-        {data.types.map((type) => (
-          <strong key={type.type.url}>{type.type.name}</strong>
-        ))}
-      </div>
-      <div>{data.height}</div>
+        {/* loops through type array and renders all types... map goes through the current array and turns it into a new array*/}
+        <div className={styles.type}>
+          {data.types.map((type) => (
+            <strong key={type.type.url}>{type.type.name}</strong>
+          ))}
+        </div>
+        <div>{data.height}</div>
 
-      {/* abilities is a list so you have to map over the abilities */}
-      <label>Abilities</label>
-      <div className={styles.ability}>
-        {data.abilities.map((ability) => (
-          <strong key={ability.ability.url}>{ability.ability.name}</strong>
-        ))}
-      </div>
-    </Dialog>
-    </div>
+        {/* abilities is a list so you have to map over the abilities */}
+        <label>Abilities</label>
+        <div className={styles.ability}>
+          {data.abilities.map((ability) => (
+            <strong key={ability.ability.url}>{ability.ability.name}</strong>
+          ))}
+        </div>
+      </Dialog>
   );
 }
 
 // creating a component that will render our pokemon
 function Pokemon({ pokemon }) {
-
   //getter and setter
   //making a new state variable and starting it out as false
   const [open, setOpen] = React.useState(false);
-  return (
 
-    //whenever the card is clicked it will open
-    <div className={styles.card}>
-      <h2 onClick={() => setOpen(true)}>{pokemon.name}</h2>
-      <PokemonPopUp
-        url={pokemon.url}
-        setOpen={setOpen}
-        open={open}
-      ></PokemonPopUp>
-    </div>
+  const { data } = useSWR(pokemon.url, getPokemon);
+  console.log(data);
+  if (!data) {
+    return "Loading...";
+  }
+  return (
+    <>
+      {/* //whenever the card is clicked it will open */}
+      <PokemonPopUp data={data} setOpen={setOpen} open={open}></PokemonPopUp>
+      <div className={styles.card} onClick={() => setOpen(true)}>
+      <img src={data.sprites.front_default} width="100px" height="100px"></img>
+        <h2>{pokemon.name}</h2>
+      </div>
+    </>
   );
 }
 
@@ -94,14 +94,17 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>
           Who's that pokemon?!
-
           {/* e stands for event listener */}
           {/* pokemon name includes the value that the user types in... filtering results and setting the searched pokemon to the filtered results */}
           <TextField
             onChange={(e) => {
               console.log(e.target.value);
               const value = e.target.value?.toLowerCase();
-              setSearchedPokemon(data.results.filter(pokemon => pokemon.name.toLowerCase().includes(value)))
+              setSearchedPokemon(
+                data.results.filter((pokemon) =>
+                  pokemon.name.toLowerCase().includes(value)
+                )
+              );
             }}
             id="outlined-basic"
             label="Search Pokemon"
@@ -110,10 +113,8 @@ export default function Home() {
         </h1>
 
         <div className={styles.grid}>
-
           {/* in the data you get an array of pokemon in the results. this is looping through each item in the results array and rendering an anchor element for each pokemon */}
           {pokemon.map((pokemon) => {
-
             // turning pokemon data into a new custom component
             return <Pokemon key={pokemon.url} pokemon={pokemon}></Pokemon>;
           })}
