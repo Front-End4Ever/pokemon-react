@@ -114,3 +114,14 @@
     flex-direction: column;
   }
 }
+
+.type {
+  display:flex;
+  gap: 8px;
+}
+
+.ability {
+  display:flex;
+  gap: 8px;
+}
+
