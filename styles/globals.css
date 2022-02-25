@@ -16,3 +16,7 @@ a {
 * {
   box-sizing: border-box;
 }
+h1{
+background: linear-gradient(rgba(229,88,75) 50%, rgba(255, 255, 255) 50%);
+padding:50px
+}
