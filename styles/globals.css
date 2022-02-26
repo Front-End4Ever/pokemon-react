@@ -31,4 +31,5 @@ border-radius: 15px;
 #poke-card{
   -webkit-text-stroke: 1px black;
   color: rgb(255, 203, 5);
+  text-transform: capitalize;
 }
