@@ -93,7 +93,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title} >
-          Who's that pokemon?!
+          Who's that Pokemon?!
           {/* e stands for event listener */}
           {/* pokemon name includes the value that the user types in... filtering results and setting the searched pokemon to the filtered results */}
         </h1>
