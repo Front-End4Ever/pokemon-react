@@ -112,7 +112,7 @@ export default function Home() {
           variant="outlined"
         />
 
-        <div className={styles.grid}>
+        <div id='poke-card' className={styles.grid}>
           {/* in the data you get an array of pokemon in the results. this is looping through each item in the results array and rendering an anchor element for each pokemon */}
           {pokemon.map((pokemon) => {
             // turning pokemon data into a new custom component
