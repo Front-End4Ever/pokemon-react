@@ -52,6 +52,7 @@ function Pokemon({ pokemon }) {
     return "Loading...";
   }
   return (
+    // reacts way of grouping together things w/o a DOM elememt
     <>
       {/* //whenever the card is clicked it will open */}
       <PokemonPopUp data={data} setOpen={setOpen} open={open}></PokemonPopUp>
@@ -96,6 +97,7 @@ export default function Home() {
           Who's that pokemon?!
           {/* e stands for event listener */}
           {/* pokemon name includes the value that the user types in... filtering results and setting the searched pokemon to the filtered results */}
+        </h1>
           <TextField
             onChange={(e) => {
               console.log(e.target.value);
@@ -110,7 +112,6 @@ export default function Home() {
             label="Search Pokemon"
             variant="outlined"
           />
-        </h1>
 
         <div className={styles.grid}>
           {/* in the data you get an array of pokemon in the results. this is looping through each item in the results array and rendering an anchor element for each pokemon */}
