@@ -98,7 +98,7 @@ export default function Home() {
           {/* e stands for event listener */}
           {/* pokemon name includes the value that the user types in... filtering results and setting the searched pokemon to the filtered results */}
         </h1>
-<<<<<<< HEAD
+
           <TextField
             onChange={(e) => {
               console.log(e.target.value);
@@ -113,22 +113,6 @@ export default function Home() {
             label="Search Pokemon"
             variant="outlined"
           />
-=======
-        <TextField
-          onChange={(e) => {
-            console.log(e.target.value);
-            const value = e.target.value?.toLowerCase();
-            setSearchedPokemon(
-              data.results.filter((pokemon) =>
-                pokemon.name.toLowerCase().includes(value)
-              )
-            );
-          }}
-          id="outlined-basic"
-          label="Search Pokemon"
-          variant="outlined"
-        />
->>>>>>> 9e5c66822f7d7fea5c664041024dc92f48fb2dff
 
         <div id='poke-card' className={styles.grid}>
           {/* in the data you get an array of pokemon in the results. this is looping through each item in the results array and rendering an anchor element for each pokemon */}
