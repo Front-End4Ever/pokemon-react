@@ -13,30 +13,30 @@ function getPokemon(URL) {
 
 function PokemonPopUp({ data, setOpen, open }) {
   return (
-      <Dialog onClose={() => setOpen(false)} open={open}>
-        <DialogTitle>{data.name}</DialogTitle>
-        <img
-          src={data.sprites.front_default}
-          width="100px"
-          height="100px"
-        ></img>
+    <Dialog onClose={() => setOpen(false)} open={open}>
+      <DialogTitle>{data.name}</DialogTitle>
+      <img
+        src={data.sprites.front_default}
+        width="100px"
+        height="100px"
+      ></img>
 
-        {/* loops through type array and renders all types... map goes through the current array and turns it into a new array*/}
-        <div className={styles.type}>
-          {data.types.map((type) => (
-            <strong key={type.type.url}>{type.type.name}</strong>
-          ))}
-        </div>
-        <div>{data.height}</div>
+      {/* loops through type array and renders all types... map goes through the current array and turns it into a new array*/}
+      <div className={styles.type}>
+        {data.types.map((type) => (
+          <strong key={type.type.url}>{type.type.name}</strong>
+        ))}
+      </div>
+      <div>{data.height}</div>
 
-        {/* abilities is a list so you have to map over the abilities */}
-        <label>Abilities</label>
-        <div className={styles.ability}>
-          {data.abilities.map((ability) => (
-            <strong key={ability.ability.url}>{ability.ability.name}</strong>
-          ))}
-        </div>
-      </Dialog>
+      {/* abilities is a list so you have to map over the abilities */}
+      <label>Abilities</label>
+      <div className={styles.ability}>
+        {data.abilities.map((ability) => (
+          <strong key={ability.ability.url}>{ability.ability.name}</strong>
+        ))}
+      </div>
+    </Dialog>
   );
 }
 
@@ -57,7 +57,7 @@ function Pokemon({ pokemon }) {
       {/* //whenever the card is clicked it will open */}
       <PokemonPopUp data={data} setOpen={setOpen} open={open}></PokemonPopUp>
       <div className={styles.card} onClick={() => setOpen(true)}>
-      <img src={data.sprites.front_default} width="100px" height="100px"></img>
+        <img src={data.sprites.front_default} width="100px" height="100px"></img>
         <h2>{pokemon.name}</h2>
       </div>
     </>
@@ -93,11 +93,12 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Who's that pokemon?!
+        <h1 className={styles.title} >
+          Who's that Pokemon?!
           {/* e stands for event listener */}
           {/* pokemon name includes the value that the user types in... filtering results and setting the searched pokemon to the filtered results */}
         </h1>
+<<<<<<< HEAD
           <TextField
             onChange={(e) => {
               console.log(e.target.value);
@@ -112,8 +113,24 @@ export default function Home() {
             label="Search Pokemon"
             variant="outlined"
           />
+=======
+        <TextField
+          onChange={(e) => {
+            console.log(e.target.value);
+            const value = e.target.value?.toLowerCase();
+            setSearchedPokemon(
+              data.results.filter((pokemon) =>
+                pokemon.name.toLowerCase().includes(value)
+              )
+            );
+          }}
+          id="outlined-basic"
+          label="Search Pokemon"
+          variant="outlined"
+        />
+>>>>>>> 9e5c66822f7d7fea5c664041024dc92f48fb2dff
 
-        <div className={styles.grid}>
+        <div id='poke-card' className={styles.grid}>
           {/* in the data you get an array of pokemon in the results. this is looping through each item in the results array and rendering an anchor element for each pokemon */}
           {pokemon.map((pokemon) => {
             // turning pokemon data into a new custom component
