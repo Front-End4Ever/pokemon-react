@@ -6,6 +6,9 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import React from "react";
 import TextField from "@mui/material/TextField";
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+
 
 function getPokemon(URL) {
   return fetch(URL).then((r) => r.json());
@@ -63,6 +66,17 @@ function Pokemon({ pokemon }) {
     </>
   );
 }
+
+// export default function BasicPagination() {
+//   return (
+//     <Stack spacing={2}>
+//       <Pagination count={10} />
+//       <Pagination count={10} color="primary" />
+//       <Pagination count={10} color="secondary" />
+//       <Pagination count={10} disabled />
+//     </Stack>
+//   );
+// }
 
 export default function Home() {
   const { data } = useSWR(

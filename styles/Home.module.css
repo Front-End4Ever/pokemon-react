@@ -125,4 +125,7 @@
   gap: 8px;
 }
 
+.Home_card___LpL {
+  filter: contrast(0) blur(1px);
+}
 
