@@ -129,3 +129,11 @@
   filter: contrast(0) blur(1px);
 }
 
+.pagination {
+  position: fixed;
+  bottom: 0;
+  padding: 8px;
+  width: 100vw;
+  background: #e8e27680;
+  backdrop-filter: blur(4px);
+}
