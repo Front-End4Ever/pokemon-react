@@ -137,3 +137,8 @@
   background: #e8e27680;
   backdrop-filter: blur(4px);
 }
+
+.search {
+  justify-content: relative;
+  left: 80px;
+}

@@ -1,21 +1,26 @@
-import '../styles/globals.css'
-import {createTheme,ThemeProvider} from '@mui/material/styles'
+import "../styles/globals.css";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "rgb(229,88,75)"
+      main: "rgb(229,88,75)",
     },
     secondary: {
-      main: "#E8E376"
-    }
-  }
-})
+      main: "#E8E376",
+    },
+    tertiary: {
+      main: "rgb(255, 203, 5)",
+    },
+  },
+});
 
 function MyApp({ Component, pageProps }) {
-
-  return <ThemeProvider theme={theme}><Component {...pageProps} /></ThemeProvider>
-
+  return (
+    <ThemeProvider theme={theme}>
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;

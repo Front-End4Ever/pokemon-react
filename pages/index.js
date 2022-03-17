@@ -88,6 +88,7 @@ function PokemonGrid() {
   const pokemon = searchedPokemon || data.results;
   return (
     <>
+    <div className={styles.search}>
       <TextField
         onChange={(e) => {
           console.log(e.target.value);
@@ -101,7 +102,9 @@ function PokemonGrid() {
         id="outlined-basic"
         label="Search Pokemon"
         variant="outlined"
+        color="tertiary"
       />
+      </div>
       <div className={styles.pagination}>
         <Pagination
           size="large"
