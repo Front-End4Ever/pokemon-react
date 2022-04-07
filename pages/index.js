@@ -16,23 +16,33 @@ function getPokemon(URL) {
 function PokemonPopUp({ data, setOpen, open }) {
   return (
     <Dialog onClose={() => setOpen(false)} open={open}>
-      <DialogTitle>{data.name}</DialogTitle>
-      <Image alt="pokemon sprite" src={data.sprites.front_default} width="100px" height="100px"></Image>
+      <div className={styles.dialog}>
+        <DialogTitle>{data.name}</DialogTitle>
+        <Image
+          alt="pokemon sprite"
+          src={data.sprites.front_default}
+          width="100px"
+          height="100px"
+        ></Image>
 
-      {/* loops through type array and renders all types... map goes through the current array and turns it into a new array*/}
-      <div className={styles.type}>
-        {data.types.map((type) => (
-          <strong key={type.type.url}>{type.type.name}</strong>
-        ))}
-      </div>
-      <div>{data.height}</div>
+        {/* loops through type array and renders all types... map goes through the current array and turns it into a new array*/}
+        <label style={{display: "block"}}>Type:</label>
+        <div className={styles.type}>
+          {data.types.map((type) => (
+            <strong key={type.type.url}>{type.type.name}</strong>
+          ))}
+        </div>
+        <label>Height:</label>
 
-      {/* abilities is a list so you have to map over the abilities */}
-      <label>Abilities</label>
-      <div className={styles.ability}>
-        {data.abilities.map((ability) => (
-          <strong key={ability.ability.url}>{ability.ability.name}</strong>
-        ))}
+        <span>{data.height}</span>
+
+        {/* abilities is a list so you have to map over the abilities */}
+        <label style={{display: "block"}}>Abilities:</label>
+        <div className={styles.ability}>
+          {data.abilities.map((ability) => (
+            <strong key={ability.ability.url}>{ability.ability.name}</strong>
+          ))}
+        </div>
       </div>
     </Dialog>
   );
@@ -55,7 +65,8 @@ function Pokemon({ pokemon }) {
       {/* //whenever the card is clicked it will open */}
       <PokemonPopUp data={data} setOpen={setOpen} open={open}></PokemonPopUp>
       <div className={styles.card} onClick={() => setOpen(true)}>
-        <Image alt="pokemon sprite"
+        <Image
+          alt="pokemon sprite"
           src={data.sprites.front_default}
           width="100px"
           height="100px"
@@ -88,22 +99,22 @@ function PokemonGrid() {
   const pokemon = searchedPokemon || data.results;
   return (
     <>
-    <div className={styles.search}>
-      <TextField
-        onChange={(e) => {
-          console.log(e.target.value);
-          const value = e.target.value?.toLowerCase();
-          setSearchedPokemon(
-            data.results.filter((pokemon) =>
-              pokemon.name.toLowerCase().includes(value)
-            )
-          );
-        }}
-        id="outlined-basic"
-        label="Search Pokemon"
-        variant="outlined"
-        color="tertiary"
-      />
+      <div className={styles.search}>
+        <TextField
+          onChange={(e) => {
+            console.log(e.target.value);
+            const value = e.target.value?.toLowerCase();
+            setSearchedPokemon(
+              data.results.filter((pokemon) =>
+                pokemon.name.toLowerCase().includes(value)
+              )
+            );
+          }}
+          id="outlined-basic"
+          label="Search Pokemon"
+          variant="outlined"
+          color="tertiary"
+        />
       </div>
       <div className={styles.pagination}>
         <Pagination
@@ -111,7 +122,7 @@ function PokemonGrid() {
           count={Math.ceil(data.count / limit)}
           color="primary"
           page={page}
-          // whenever user clicks on the page we set the offset to the value of the page they clicked 
+          // whenever user clicks on the page we set the offset to the value of the page they clicked
           onChange={(event, value) => {
             setOffset((value - 1) * limit);
           }}
@@ -137,7 +148,7 @@ export default function Home() {
           name="description"
           content="An electronic device created and designed to catalog and provide information regarding the various species of Pokémon."
         />
-        <Link href="https://fonts.cdnfonts.com/css/pokemon-solid" rel="stylesheet"></Link>
+
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

@@ -116,12 +116,12 @@
 }
 
 .type {
-  display:flex;
+  display: flex;
   gap: 8px;
 }
 
 .ability {
-  display:flex;
+  display: flex;
   gap: 8px;
 }
 
@@ -141,4 +141,11 @@
 .search {
   justify-content: relative;
   left: 80px;
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
 }
