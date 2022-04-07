@@ -17,7 +17,7 @@ function PokemonPopUp({ data, setOpen, open }) {
   return (
     <Dialog onClose={() => setOpen(false)} open={open}>
       <DialogTitle>{data.name}</DialogTitle>
-      <img src={data.sprites.front_default} width="100px" height="100px"></img>
+      <Image alt="pokemon sprite" src={data.sprites.front_default} width="100px" height="100px"></Image>
 
       {/* loops through type array and renders all types... map goes through the current array and turns it into a new array*/}
       <div className={styles.type}>
@@ -55,11 +55,11 @@ function Pokemon({ pokemon }) {
       {/* //whenever the card is clicked it will open */}
       <PokemonPopUp data={data} setOpen={setOpen} open={open}></PokemonPopUp>
       <div className={styles.card} onClick={() => setOpen(true)}>
-        <img
+        <Image alt="pokemon sprite"
           src={data.sprites.front_default}
           width="100px"
           height="100px"
-        ></img>
+        ></Image>
         <h2>{pokemon.name}</h2>
       </div>
     </>
@@ -111,6 +111,7 @@ function PokemonGrid() {
           count={Math.ceil(data.count / limit)}
           color="primary"
           page={page}
+          // whenever user clicks on the page we set the offset to the value of the page they clicked 
           onChange={(event, value) => {
             setOffset((value - 1) * limit);
           }}
@@ -141,7 +142,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Who's that Pokemon?!
+          Who&apos;s that Pokemon?!
           {/* e stands for event listener */}
           {/* pokemon name includes the value that the user types in... filtering results and setting the searched pokemon to the filtered results */}
         </h1>
