@@ -7,6 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import React from "react";
 import TextField from "@mui/material/TextField";
 import Link from "next/link";
+import Pagination from "@mui/material/Pagination";
 
 function getPokemon(URL) {
   return fetch(URL).then((r) => r.json());
@@ -16,11 +17,7 @@ function PokemonPopUp({ data, setOpen, open }) {
   return (
     <Dialog onClose={() => setOpen(false)} open={open}>
       <DialogTitle>{data.name}</DialogTitle>
-      <img
-        src={data.sprites.front_default}
-        width="100px"
-        height="100px"
-      ></img>
+      <Image alt="pokemon sprite" src={data.sprites.front_default} width="100px" height="100px"></Image>
 
       {/* loops through type array and renders all types... map goes through the current array and turns it into a new array*/}
       <div className={styles.type}>
@@ -58,18 +55,26 @@ function Pokemon({ pokemon }) {
       {/* //whenever the card is clicked it will open */}
       <PokemonPopUp data={data} setOpen={setOpen} open={open}></PokemonPopUp>
       <div className={styles.card} onClick={() => setOpen(true)}>
-        <img src={data.sprites.front_default} width="100px" height="100px"></img>
+        <Image alt="pokemon sprite"
+          src={data.sprites.front_default}
+          width="100px"
+          height="100px"
+        ></Image>
         <h2>{pokemon.name}</h2>
       </div>
     </>
   );
 }
 
-export default function Home() {
+function PokemonGrid() {
+  const limit = 20;
+  const [offset, setOffset] = React.useState(0);
   const { data } = useSWR(
-    "https://pokeapi.co/api/v2/pokemon?limit=151",
+    `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`,
     getPokemon
   );
+  const page = offset / limit + 1;
+  console.log(page);
   console.log(data);
 
   // data represents the original pokemon, so we useState to identify searched results
@@ -81,7 +86,49 @@ export default function Home() {
 
   // if there's searched pokemon we use the useState variable, otherwise we display all of the results
   const pokemon = searchedPokemon || data.results;
+  return (
+    <>
+    <div className={styles.search}>
+      <TextField
+        onChange={(e) => {
+          console.log(e.target.value);
+          const value = e.target.value?.toLowerCase();
+          setSearchedPokemon(
+            data.results.filter((pokemon) =>
+              pokemon.name.toLowerCase().includes(value)
+            )
+          );
+        }}
+        id="outlined-basic"
+        label="Search Pokemon"
+        variant="outlined"
+        color="tertiary"
+      />
+      </div>
+      <div className={styles.pagination}>
+        <Pagination
+          size="large"
+          count={Math.ceil(data.count / limit)}
+          color="primary"
+          page={page}
+          // whenever user clicks on the page we set the offset to the value of the page they clicked 
+          onChange={(event, value) => {
+            setOffset((value - 1) * limit);
+          }}
+        />
+      </div>
+      <div id="poke-card" className={styles.grid}>
+        {/* in the data you get an array of pokemon in the results. this is looping through each item in the results array and rendering an anchor element for each pokemon */}
+        {pokemon.map((pokemon) => {
+          // turning pokemon data into a new custom component
+          return <Pokemon key={pokemon.url} pokemon={pokemon}></Pokemon>;
+        })}
+      </div>
+    </>
+  );
+}
 
+export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
@@ -90,39 +137,17 @@ export default function Home() {
           name="description"
           content="An electronic device created and designed to catalog and provide information regarding the various species of Pokémon."
         />
-        <Link href="http://fonts.cdnfonts.com/css/pokemon-solid" rel="stylesheet"></Link>
+        <Link href="https://fonts.cdnfonts.com/css/pokemon-solid" rel="stylesheet"></Link>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title} >
-          Who's that Pokemon?!
+        <h1 className={styles.title}>
+          Who&apos;s that Pokemon?!
           {/* e stands for event listener */}
           {/* pokemon name includes the value that the user types in... filtering results and setting the searched pokemon to the filtered results */}
         </h1>
-
-          <TextField
-            onChange={(e) => {
-              console.log(e.target.value);
-              const value = e.target.value?.toLowerCase();
-              setSearchedPokemon(
-                data.results.filter((pokemon) =>
-                  pokemon.name.toLowerCase().includes(value)
-                )
-              );
-            }}
-            id="outlined-basic"
-            label="Search Pokemon"
-            variant="outlined"
-          />
-
-        <div id='poke-card' className={styles.grid}>
-          {/* in the data you get an array of pokemon in the results. this is looping through each item in the results array and rendering an anchor element for each pokemon */}
-          {pokemon.map((pokemon) => {
-            // turning pokemon data into a new custom component
-            return <Pokemon key={pokemon.url} pokemon={pokemon}></Pokemon>;
-          })}
-        </div>
+        <PokemonGrid></PokemonGrid>
       </main>
     </div>
   );
