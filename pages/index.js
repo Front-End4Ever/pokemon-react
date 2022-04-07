@@ -6,6 +6,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import React from "react";
 import TextField from "@mui/material/TextField";
+import Link from "next/link";
 
 function getPokemon(URL) {
   return fetch(URL).then((r) => r.json());
@@ -89,6 +90,7 @@ export default function Home() {
           name="description"
           content="An electronic device created and designed to catalog and provide information regarding the various species of Pokémon."
         />
+        <Link href="http://fonts.cdnfonts.com/css/pokemon-solid" rel="stylesheet"></Link>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
